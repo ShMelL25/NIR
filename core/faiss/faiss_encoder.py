@@ -51,7 +51,7 @@ class Model_embeddings:
         if not os.path.isdir(f"NIR/config/books/{academic_subject}/{name}"):
             os.mkdir(f"NIR/config/books/{academic_subject}/{name}")
         
-        faiss_docs.save_local('NIR/config/books/{academic_subject}/{name}')
+        faiss_docs.save_local(f'NIR/config/books/{academic_subject}/{name}')
         
     def add_derectory(self, academic_subject):
         
