@@ -8,12 +8,12 @@ from config.model_config import check_cuda
 
 class Model_embeddings:
     
-    def __init__(self):
-        self.load_embeddings()
+    def __init__(self, model_path):
+        self.load_embeddings(model_path=model_path)
     
-    def load_embeddings(self):
+    def load_embeddings(self, model_path):
         
-        model_path = 'config\models\llama-2-7b-chat.Q4_0\llama-2-7b-chat.Q4_0.gguf'
+        #model_path = 'config\models\llama-2-7b-chat.Q4_0\llama-2-7b-chat.Q4_0.gguf'
         if check_cuda() == True:
             self.embeddings = LlamaCppEmbeddings(
                                 model_path=model_path,
