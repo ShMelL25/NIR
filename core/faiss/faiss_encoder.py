@@ -38,7 +38,7 @@ class Model_embeddings:
         docs = test_dict[file_name[1]].load_and_split(text_splitter)
         
         faiss_docs = FAISS.from_documents(docs, self.embeddings)
-        self.save_embeddings(path_file=path_file)
+        self.save_embeddings(path_file=path_file, faiss_docs=faiss_docs, academic_subject=academic_subject)
         
         return faiss_docs
     
@@ -51,7 +51,7 @@ class Model_embeddings:
         if not os.path.isdir(f"NIR/config/books/{academic_subject}/{name}"):
             os.mkdir(f"NIR/config/books/{academic_subject}/{name}")
         
-        faiss_docs.save_local
+        faiss_docs.save_local('NIR/config/books/{academic_subject}/{name}')
         
     def add_derectory(self, academic_subject):
         
