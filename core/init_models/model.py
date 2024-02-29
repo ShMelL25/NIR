@@ -1,6 +1,5 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from langchain.llms import HuggingFacePipeline
-from NIR.config.model_config import check_cuda
 import torch
 
 class Model:

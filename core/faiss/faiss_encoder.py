@@ -42,6 +42,16 @@ class Model_embeddings:
         
         return faiss_docs
     
+    def local_load(self, name_file:str, academic_subject:str):
+          
+        faiss_docs = FAISS.load_local(f'NIR/config/books/{academic_subject}/{name_file}', self.embeddings)
+        
+        return faiss_docs
+    
+    def search_embeddings(self, query:str, faiss_docs:str):
+        return faiss_docs.similarity_search(query)[0].page_content
+        
+    
     def save_embeddings(self, path_file:str, faiss_docs, academic_subject:str):
         
         name = path_file.split('/')[-1]
@@ -57,5 +67,7 @@ class Model_embeddings:
         
         if not os.path.isdir(f"NIR/config/books/{academic_subject}"):
             os.mkdir(f"NIR/config/books/{academic_subject}")
+        
+    
             
         
