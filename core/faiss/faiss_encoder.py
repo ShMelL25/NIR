@@ -42,9 +42,9 @@ class Model_embeddings:
         
         return faiss_docs
     
-    def local_load(self, name_file:str, academic_subject:str):
+    def local_load(self, path_file:str):
           
-        faiss_docs = FAISS.load_local(f'NIR/config/books/{academic_subject}/{name_file}', self.embeddings)
+        faiss_docs = FAISS.load_local(path_file, self.embeddings)
         
         return faiss_docs
     
