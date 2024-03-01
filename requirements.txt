@@ -1,0 +1,11 @@
+transformers
+langchain
+bitsandbytes
+accelerate
+langchain_experimental
+langchain_community
+docx2txt
+pypdf
+llama-cpp-python
+faiss-cpu
+faiss-gpu
