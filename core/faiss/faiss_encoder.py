@@ -4,7 +4,7 @@ from langchain_community.vectorstores import FAISS
 from langchain.embeddings import LlamaCppEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-from NIR.config.model_config import check_cuda
+from config.model_config import check_cuda
 import os
 
 
@@ -24,7 +24,7 @@ class Model_embeddings:
         else:
             self.embeddings = LlamaCppEmbeddings(model_path=model_path)
     
-    def transform(self, path_file:str, academic_subject:str):
+    def transform(self, path_file:str, academic_subject:str, chunk_size:int=100, chunk_overlap:int=20):
         
         test_dict = {
             'pdf':PyPDFLoader(path_file),
@@ -34,7 +34,7 @@ class Model_embeddings:
         
         file_name = path_file.split('.')
         
-        text_splitter = RecursiveCharacterTextSplitter()
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         docs = test_dict[file_name[1]].load_and_split(text_splitter)
         
         faiss_docs = FAISS.from_documents(docs, self.embeddings)
@@ -58,10 +58,11 @@ class Model_embeddings:
         
         self.add_derectory(academic_subject)
         
-        if not os.path.isdir(f"NIR/config/books/{academic_subject}/{name}"):
-            os.mkdir(f"NIR/config/books/{academic_subject}/{name}")
+        if not os.path.isdir(f"NIR/config/books/{academic_subject}/{name.split('.')[0]}"):
+            os.mkdir(f"NIR/config/books/{academic_subject}/{name.split('.')[0]}")
+        path_save = f"NIR/config/books/{academic_subject}/{name.split('.')[0]}"
         
-        faiss_docs.save_local(f'NIR/config/books/{academic_subject}/{name}')
+        faiss_docs.save_local(path_save)
         
     def add_derectory(self, academic_subject):
         
