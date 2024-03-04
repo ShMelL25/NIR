@@ -38,7 +38,7 @@ class Model_embeddings:
         docs = test_dict[file_name[1]].load_and_split(text_splitter)
         
         faiss_docs = FAISS.from_documents(docs, self.embeddings)
-        self.save_embeddings(path_file=path_file, faiss_docs=faiss_docs, academic_subject=academic_subject)
+        #self.save_embeddings(path_file=path_file, faiss_docs=faiss_docs, academic_subject=academic_subject)
         
         return faiss_docs
     
