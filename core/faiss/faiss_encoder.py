@@ -4,7 +4,7 @@ from langchain_community.vectorstores import FAISS
 from langchain.embeddings import LlamaCppEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-from config.model_config import check_cuda
+from NIR.config.model_config import check_cuda
 import os
 
 
@@ -37,14 +37,14 @@ class Model_embeddings:
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         docs = test_dict[file_name[1]].load_and_split(text_splitter)
         
-        faiss_docs = FAISS.from_documents(docs, self.embeddings)
+        faiss_docs = FAISS.from_documents(docs, self.embeddings, allow_dangerous_deserialization=True)
         #self.save_embeddings(path_file=path_file, faiss_docs=faiss_docs, academic_subject=academic_subject)
         
         return faiss_docs
     
     def local_load(self, path_file:str):
           
-        faiss_docs = FAISS.load_local(path_file, self.embeddings)
+        faiss_docs = FAISS.load_local(path_file, self.embeddings, allow_dangerous_deserialization=True)
         
         return faiss_docs
     
