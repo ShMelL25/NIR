@@ -2,7 +2,7 @@ from langchain_community.document_loaders import PyPDFLoader, TextLoader, Docx2t
 from langchain_community.document_loaders import TextLoader
 from langchain_community.vectorstores import FAISS
 from langchain.embeddings import LlamaCppEmbeddings
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_experimental.text_splitter import SemanticChunker
 
 from NIR.config.model_config import check_cuda
 import os
@@ -14,8 +14,7 @@ class Model_embeddings:
         self.load_embeddings(model_path=model_path)
     
     def load_embeddings(self, model_path):
-        
-        #model_path = 'config\models\llama-2-7b-chat.Q4_0\llama-2-7b-chat.Q4_0.gguf'
+    
         if check_cuda() == True:
             self.embeddings = LlamaCppEmbeddings(
                                 model_path=model_path,
@@ -24,7 +23,7 @@ class Model_embeddings:
         else:
             self.embeddings = LlamaCppEmbeddings(model_path=model_path)
     
-    def transform(self, path_file:str, academic_subject:str, chunk_size:int=100, chunk_overlap:int=20):
+    def transform(self, path_file:str, chunk_size:int=100, chunk_overlap:int=20):
         
         test_dict = {
             'pdf':PyPDFLoader(path_file),
@@ -34,13 +33,11 @@ class Model_embeddings:
         
         file_name = path_file.split('.')
         
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+        text_splitter = SemanticChunker(self.embeddings)
         docs = test_dict[file_name[1]].load_and_split(text_splitter)
+        #faiss_docs = FAISS.from_documents(docs, self.embeddings)
         
-        faiss_docs = FAISS.from_documents(docs, self.embeddings)
-        self.save_embeddings(path_file=path_file, faiss_docs=faiss_docs, academic_subject=academic_subject)
-        
-        return faiss_docs
+        return docs
     
     def local_load(self, path_file:str):
           
