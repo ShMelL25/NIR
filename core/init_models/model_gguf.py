@@ -2,6 +2,7 @@ from llama_cpp import Llama
 from NIR.config.model_config import check_cuda
 from transformers import pipeline
 from langchain.llms import HuggingFacePipeline
+from .tokenizer import Tokenize_Model
 
 class Model_GGUF:
     
@@ -12,10 +13,11 @@ class Model_GGUF:
                     n_ctx=16000,  # Context length to use
                     n_threads=32  # Number of model layers to offload to GPU
                 )
-        
+        self.embedding_model = Tokenize_Model(model_path=model_path)
         self.pipeline = HuggingFacePipeline(pipeline=pipeline(
                     "text-generation", model=self.model, max_new_tokens=300
                     ))
         
     def predict(self, text:str):
         return self.pipeline.predict(text)
+   
