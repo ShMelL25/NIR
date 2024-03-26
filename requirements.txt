@@ -8,3 +8,4 @@ docx2txt
 pypdf
 llama-cpp-python
 faiss-cpu
+sentence-transformers
