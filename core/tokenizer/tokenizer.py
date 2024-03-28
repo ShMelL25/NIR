@@ -66,3 +66,7 @@ class Tokenize_Model:
     
     def search_embeddings(self, query:str, faiss_docs):
         return faiss_docs.similarity_search(query)[0].page_content
+    
+    def add_embeddings(self, faiss_docs, docs_processed):
+        faiss_docs.add_documents(docs_processed)
+        return faiss_docs

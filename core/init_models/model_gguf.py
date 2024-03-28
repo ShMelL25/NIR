@@ -19,4 +19,3 @@ class Model_GGUF:
         
     def predict(self, text:str):
         return self.pipeline.predict(text)
-   

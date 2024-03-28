@@ -6,6 +6,6 @@ langchain_experimental==0.0.54
 langchain_community
 docx2txt
 pypdf
-llama-cpp-python
+llama-cpp-python==0.2.53
 faiss-cpu
 sentence-transformers
