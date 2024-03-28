@@ -1,6 +1,6 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from langchain.llms import HuggingFacePipeline
-from .tokenizer import Tokenize_Model
+from ..tokenizer.tokenizer import Tokenize_Model
 import torch
 
 class Model:

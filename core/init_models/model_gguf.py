@@ -1,8 +1,7 @@
 from llama_cpp import Llama
-from NIR.config.model_config import check_cuda
 from transformers import pipeline
 from langchain.llms import HuggingFacePipeline
-from .tokenizer import Tokenize_Model
+from ..tokenizer.tokenizer import Tokenize_Model
 
 class Model_GGUF:
     
